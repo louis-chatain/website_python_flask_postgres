@@ -1,11 +1,15 @@
 {% extends "footer_header.html" %}
 {% block main %}
-<h1>Login</h1>
-<form method="post" action="{{ url_for('login') }}">
-    <label for="username">Utilisateur:</label>
-    <input id="username" type="text" name="username" required>
-    <label for="password">mot de passe:</label>
-    <input id="password" type="password" name="password" required>
-    <input type="submit" value="Se Connecter">
-</form>
+<div class="need_padding">
+    <form class="form" method="post" action="{{ url_for('login') }}">
+        <div class="form_div">
+            <h1>Login</h1>
+            <input id="username" type="text" name="username" placeholder="Utilisateur:" required>
+            <input id="password" type="password" name="password" placeholder="mot de passe:" required>
+        </div>
+        <div class="projets_and_articles_header">
+            <button type="submit">Se Connecter</button>
+        </div>
+    </form>
+</div>
 {% endblock %}
