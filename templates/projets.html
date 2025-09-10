@@ -1,7 +1,10 @@
 {% extends "footer_header.html" %}
 {% block main %}
 <section id="projets">
-    <h1 class="big_h1">projets!</h1>
+    <div class="projets_and_articles_header">
+        <h1 class="big_h1">Projets!</h1>
+        <a href="{{ url_for('add_projet') }}"><button>Publier mon projet!</button></a>
+    </div>
     <div class="grid">
         {% for projets in liste_projets %}
         <article>
