@@ -4,8 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime, timezone
 from donnees import donnees
-from bdd_articles import liste_articles
-from bdd_projets import liste_projets
 import os
 
 NB_PROJETS = 3

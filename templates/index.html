@@ -14,7 +14,7 @@
                 un peu plus bas.
             </p>
             <ul>
-                <li>Python - -Niveau Godlike</li>
+                <li>Python - Niveau Godlike</li>
                 <li>DevWeb (front/back-end)</li>
                 <li>...</li>
             </ul>
@@ -25,30 +25,35 @@
     <hr>
 
     <section id="projets">
-        <h1 class="big_h1">projets</h1>
+        <div class="projets_and_articles_header">
+            <h1 class="big_h1">Projets!</h1>
+            <a href="{{url_for('projets')}}"><button>Voir tous les projets!</button></a>
+        </div>
         <div class="grid">
             {% for projets in liste_projets %}
             <article>
                 <div><img src={{projets.img_url}} alt="photo de moi"></div>
                 <div>
-                    <h2><u>{{ projets.titre }}</u></h2>
+                    <h2><u><a href="{{ url_for('projets', slug=projets.slug) }}">{{ projets.titre }}</a></u></h2>
                     <p>{{ projets.contenu }}</p>
                 </div>
             </article>
             {% endfor %}
             <!-- <article class="direction-rtl"> -->
         </div>
-        <a href="{{url_for('projets')}}">mes projets!</a>
     </section>
 
     <hr> <!-- ----------------------------------------------------------------------- -->
 
     <section>
-        <h1 class="big_h1">Articles</h1>
+        <div class="projets_and_articles_header">
+            <h1 class="big_h1">Articles!</h1>
+            <a href="{{url_for('articles')}}"><button>Voir tous les articles!</button></a>
+        </div>
         <div>
             {% for articles in liste_articles %}
             <article>
-                <h2><u><a href="">{{articles.titre}}</a></u></h2>
+                <h2><u><a href="{{ url_for('articles', slug=articles.slug) }}">{{articles.titre}}</a></u></h2>
                 <div>
                     <img src={{articles.img_url}} alt="photo de moi">
                     <p>{{ articles.contenu }}</p>
@@ -56,7 +61,6 @@
             </article>
             {% endfor %}
         </div>
-        <a href="{{url_for('articles')}}">mes articles!</a>
     </section>
 </main>
 {% endblock %}
