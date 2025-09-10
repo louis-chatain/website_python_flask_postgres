@@ -1,0 +1,12 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<ul>
+    {% for key, data in donnees.items() %}
+    <li>
+        <a href="/celebrites/api/{{ key }}">
+            {{ data['prenom'] }} {{ data['nom'] }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

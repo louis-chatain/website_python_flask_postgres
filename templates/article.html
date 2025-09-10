@@ -1,0 +1,12 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<div style="padding: 0 20%;">
+    <article>
+        <h2><u>{{article.titre}}</u></h2>
+        <div>
+            <p>{{ article.contenu }}</p>
+            <span>{{article.date.date()}}</span>
+        </div>
+    </article>
+</div>
+{% endblock %}

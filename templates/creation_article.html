@@ -1,0 +1,13 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<h1>creation d'articles</h1>
+<form method="post" action="{{ url_for('creation_article') }}">
+    <label for="titre">titre:</label>
+    <input id="titre" type="text" name="titre" required>
+    <label for="slug">slug:</label>
+    <input id="slug" type="text" name="slug" required>
+    <label for="contenu">contenu:</label>
+    <textarea name="contenu" id="contenu" required></textarea>
+    <input type="submit" value="Creer">
+</form>
+{% endblock %}

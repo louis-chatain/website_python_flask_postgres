@@ -1,0 +1,17 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<section id="projets">
+    <h1 class="big_h1">projets!</h1>
+    <div class="grid">
+        {% for projets in liste_projets %}
+        <article>
+            <div><img src={{projets.img_url}} alt="photo de moi"></div>
+            <div>
+                <h2><a href="{{ url_for('projets', slug=projets.slug) }}">{{ projets.titre }}</a><u></u></h2>
+                <p>{{ projets.contenu }}</p>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

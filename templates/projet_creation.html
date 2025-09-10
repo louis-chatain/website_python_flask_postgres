@@ -1,0 +1,14 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<h1>creation de projets</h1>
+<form method="post" action="{{ url_for('add_projet') }}" enctype="multipart/form-data">
+    <label for="titre">titre:</label>
+    <input id="titre" type="text" name="titre" required>
+    <label for="slug">slug:</label>
+    <input id="slug" type="text" name="slug" required>
+    <label for="contenu">contenu:</label>
+    <textarea name="contenu" id="contenu" required></textarea>
+    <input type="file" name="image">
+    <input type="submit" value="Creer">
+</form>
+{% endblock %}

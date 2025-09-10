@@ -1,0 +1,15 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<div style="padding: 0 20%;">
+    <h1>articles!</h1>
+    {% for articles in liste_articles %}
+    <article>
+        <h2><u><a href="{{ url_for('articles', slug=articles.slug) }}">{{articles.titre}}</a></u></h2>
+        <div>
+            <p>{{ articles.contenu }}</p>
+            <span>{{articles.date.date()}}</span>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}

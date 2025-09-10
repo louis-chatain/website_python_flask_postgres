@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>le titre tout en haut dans l'onglet!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div>
+                <button><a href="">Contactez Moi</a></button>
+                <div>
+                    <a href="{{ url_for('home') }}">Home</a>
+                    <a href="{{ url_for('projets') }}">projets</a>
+                    <a href="{{ url_for('articles') }}">Articles</a>
+                    <a href="{{ url_for('celebrites') }}">celebrites</a>
+                    <a href="{{ url_for('login') }}">Login</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <hr>
+    {% block main %}{% endblock %}
+    <hr>
+    <footer>
+        <p>@ Louis Chatain</p>
+        <p>github linkdin</p>
+    </footer>
+</body>
+
+</html>
