@@ -1,66 +1,64 @@
 {% extends "footer_header.html" %}
 {% block main %}
-<main>
-    <div class="bgc presentation">
-        <div>
-            {% if username %}
-            <h1>Bienvenue {{username}}!</h1>
-            {% else %}
-            <h1>Bienvenue!</h1>
-            {% endif %}
-            <p>
-                Bonjour,[Cette formation va vous permettre de maîtriser tous
-                <span><a href="">mes projets</a></span>
-                un peu plus bas.
-            </p>
-            <ul>
-                <li>Python - Niveau Godlike</li>
-                <li>DevWeb (front/back-end)</li>
-                <li>...</li>
-            </ul>
-        </div>
-        <img class="rounded_img" src="{{ url_for('static', filename='images/DOROHEDORO.png') }}" alt="photo de moi">
+<div class="bgc presentation">
+    <div>
+        {% if username %}
+        <h1>Bienvenue {{username}}!</h1>
+        {% else %}
+        <h1>Bienvenue!</h1>
+        {% endif %}
+        <p>
+            Bonjour,[Cette formation va vous permettre de maîtriser tous
+            <span><a href="">mes projets</a></span>
+            un peu plus bas.
+        </p>
+        <ul>
+            <li>Python - Niveau Godlike</li>
+            <li>DevWeb (front/back-end)</li>
+            <li>...</li>
+        </ul>
     </div>
+    <img class="rounded_img" src="{{ url_for('static', filename='images/DOROHEDORO.png') }}" alt="photo de moi">
+</div>
 
-    <hr>
+<hr>
 
-    <section id="projets">
-        <div class="projets_and_articles_header">
-            <h1 class="big_h1">Projets!</h1>
-            <a href="{{url_for('projets')}}"><button>Voir tous les projets!</button></a>
-        </div>
-        <div class="grid">
-            {% for projets in liste_projets %}
-            <article>
-                <div><img src={{projets.img_url}} alt="photo de moi"></div>
-                <div>
-                    <h2><u><a href="{{ url_for('projets', slug=projets.slug) }}">{{ projets.titre }}</a></u></h2>
-                    <p>{{ projets.contenu }}</p>
-                </div>
-            </article>
-            {% endfor %}
-            <!-- <article class="direction-rtl"> -->
-        </div>
-    </section>
+<section id="projets">
+    <div class="projets_and_articles_header">
+        <h1 class="big_h1">Projets!</h1>
+        <a href="{{url_for('projets')}}"><button>Voir tous les projets!</button></a>
+    </div>
+    <div class="grid">
+        {% for projets in liste_projets %}
+        <article>
+            <div><img src={{projets.img_url}} alt="photo de moi"></div>
+            <div>
+                <h2><u><a href="{{ url_for('projets', slug=projets.slug) }}">{{ projets.titre }}</a></u></h2>
+                <p>{{ projets.contenu }}</p>
+            </div>
+        </article>
+        {% endfor %}
+        <!-- <article class="direction-rtl"> -->
+    </div>
+</section>
 
-    <hr> <!-- ----------------------------------------------------------------------- -->
+<hr> <!-- ----------------------------------------------------------------------- -->
 
-    <section>
-        <div class="projets_and_articles_header">
-            <h1 class="big_h1">Articles!</h1>
-            <a href="{{url_for('articles')}}"><button>Voir tous les articles!</button></a>
-        </div>
-        <div>
-            {% for articles in liste_articles %}
-            <article>
-                <h2><u><a href="{{ url_for('articles', slug=articles.slug) }}">{{articles.titre}}</a></u></h2>
-                <div>
-                    <img src={{articles.img_url}} alt="photo de moi">
-                    <p>{{ articles.contenu }}</p>
-                </div>
-            </article>
-            {% endfor %}
-        </div>
-    </section>
-</main>
+<section>
+    <div class="projets_and_articles_header">
+        <h1 class="big_h1">Articles!</h1>
+        <a href="{{url_for('articles')}}"><button>Voir tous les articles!</button></a>
+    </div>
+    <div>
+        {% for articles in liste_articles %}
+        <article>
+            <h2><u><a href="{{ url_for('articles', slug=articles.slug) }}">{{articles.titre}}</a></u></h2>
+            <div>
+                <img src={{articles.img_url}} alt="photo de moi">
+                <p>{{ articles.contenu }}</p>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

@@ -27,6 +27,9 @@ nav div a {
     padding-left: 10px;
     padding-right: 10px;
 }
+main{
+    min-height: 71vh;
+}
 
 body {
     margin: 0;
