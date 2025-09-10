@@ -14,7 +14,7 @@ IMG_UPLOAD = "static/images/"
 
 app = Flask(__name__)
 
-# DATABASE
+# ---------------------- DATABASE -------------------------
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db_51.db"
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -34,7 +34,7 @@ class Projet(db.Model):
     slug = db.Column(db.String(150))
     img_url = db.Column(db.String(100))
     contenu = db.Column(db.Text)
-
+# ------------------------ END DATABASE --------------------------
 
 @app.errorhandler(404)
 def page_404(error):
@@ -46,8 +46,8 @@ def page_404(error):
 def home():
     return render_template(
         "index.html",
-        liste_projets=liste_projets[:NB_PROJETS],
-        liste_articles=liste_articles[:NB_ARTICLES],
+        liste_projets=Projet.query.all()[:NB_PROJETS],
+        liste_articles=Article.query.all()[:NB_ARTICLES]
     )
 
 
