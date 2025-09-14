@@ -1,12 +1,13 @@
 {% extends "footer_header.html" %}
 {% block main %}
-<div class="bgc presentation">
+<section class="bgc presentation">
     <div>
-        {% if username %}
+        <!-- {% if username %}
         <h1>Bienvenue {{username}}!</h1>
         {% else %}
         <h1>Bienvenue!</h1>
-        {% endif %}
+        {% endif %} -->
+        <h1>Bienvenue!</h1>
         <p>
             Bonjour,[Cette formation va vous permettre de maîtriser tous
             <span><a href="">mes projets</a></span>
@@ -19,9 +20,9 @@
         </ul>
     </div>
     <img class="rounded_img" src="{{ url_for('static', filename='images/DOROHEDORO.png') }}" alt="photo de moi">
-</div>
+</section>
 
-<hr>
+<hr> <!-- ----------------------------------------------------------------------- -->
 
 <section id="projets">
     <div class="projets_and_articles_header">
