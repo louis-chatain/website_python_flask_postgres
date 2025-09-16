@@ -10,8 +10,7 @@
         <h1>Bienvenue!</h1>
         <p>
             Bonjour,[Cette formation va vous permettre de maîtriser tous
-            <span><a href="">mes projets</a></span>
-            un peu plus bas.
+            <span>mes projets</span> un peu plus bas.
         </p>
         <ul>
             <li>Python - Niveau Godlike</li>
@@ -25,7 +24,7 @@
 <hr> <!-- ----------------------------------------------------------------------- -->
 
 <section id="projets">
-    <div class="projets_and_articles_header">
+    <div class="projets_and_articles_header"> 
         <h1 class="big_h1">Projets!</h1>
         <a href="{{url_for('projets')}}"><button>Voir tous les projets!</button></a>
     </div>
@@ -52,10 +51,9 @@
     </div>
     <div>
         {% for articles in liste_articles %}
-        <article>
+        <article class="b">
             <h2><u><a href="{{ url_for('articles', slug=articles.slug) }}">{{articles.titre}}</a></u></h2>
             <div>
-                <img src={{articles.img_url}} alt="photo de moi">
                 <p>{{ articles.contenu }}</p>
             </div>
         </article>
