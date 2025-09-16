@@ -1,12 +1,14 @@
 {% extends "footer_header.html" %}
 {% block main %}
-<ul>
-    {% for key, data in donnees.items() %}
-    <li>
-        <a href="/celebrites/api/{{ key }}">
-            {{ data['prenom'] }} {{ data['nom'] }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+<div style="padding: 0 20%;">
+    <article>
+        <h2><u>{{ celeb.prenom }} {{ celeb.nom }}</u></h2>
+        <div>
+            <p>{{ celeb.age }}</p>
+            <p>{{ celeb.profession }}</p>
+            <p>{{ celeb.taille }}</p>
+            <p>{{ celeb.Description }}</p>
+        </div>
+    </article>
+</div>
 {% endblock %}

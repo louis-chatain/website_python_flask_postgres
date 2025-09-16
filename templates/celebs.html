@@ -1,0 +1,19 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<div style="padding: 0 20%;">
+    <div class="projets_and_articles_header">
+        <h1 class="big_h1">Celebritity!</h1>
+        <a href="{{ url_for('add_celeb') }}"><button>Publier la celebrity!</button></a>
+    </div>
+    <ul>
+        {% for celeb in liste_celeb %}
+        <li>
+            <a href="{{ url_for('celebrites', slug=celeb.nom) }}">
+                {{ celeb.prenom }} {{ celeb.nom }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
