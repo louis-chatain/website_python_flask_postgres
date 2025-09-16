@@ -3,7 +3,6 @@ from markupsafe import escape
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime, timezone
-from donnees import donnees
 import os
 
 NB_PROJETS = 3
@@ -14,6 +13,7 @@ app = Flask(__name__)
 
 # ---------------------- DATABASE -------------------------
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db_51.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -32,7 +32,20 @@ class Projet(db.Model):
     slug = db.Column(db.String(150))
     img_url = db.Column(db.String(100))
     contenu = db.Column(db.Text)
+
+
+class Celebrity(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(100))
+    prenom = db.Column(db.String(100))
+    age = db.Column(db.String(3))
+    profession = db.Column(db.String(150))
+    taille = db.Column(db.String(10))
+    Description = db.Column(db.String(150))
+
+
 # ------------------------ END DATABASE --------------------------
+
 
 @app.errorhandler(404)
 def page_404(error):
@@ -84,7 +97,7 @@ def add_projet():
 def articles(slug=""):
     if slug:
         article = Article.query.filter_by(slug=slug).first_or_404()
-        return render_template("article.html", article=article)       
+        return render_template("article.html", article=article)
     articles = Article.query.order_by(Article.date.desc()).all()
     return render_template("articles.html", liste_articles=articles)
 
@@ -104,17 +117,39 @@ def creation_article():
 
 
 @app.route("/celebrites")
-def celebrites():
-    return render_template("celeb.html", donnees=donnees)
-
-
-@app.route("/celebrites/api/<string:slug>")
-def celebrite(slug):
+@app.route("/celebrites/<string:slug>")
+def celebrites(slug=""):
     slug = escape(slug)
-    if slug in donnees:
-        return donnees[slug]
-    else:
-        return {"erreur": "non existant"}, 404
+    if slug:
+        celeb = Celebrity.query.filter_by(nom=slug).first_or_404()
+        return render_template("celeb.html", celeb=celeb)
+    liste_celeb = Celebrity.query.all()
+    return render_template("celebs.html", liste_celeb=liste_celeb)
+
+
+@app.route("/celebrites/creer", methods=["GET", "POST"])
+def add_celeb():
+    if request.method == "POST":
+        nom = request.form["nom"]
+        prenom = request.form["prenom"]
+        age = request.form["age"]
+        profession = request.form["profession"]
+        taille = request.form["taille"]
+        Description = request.form["Description"]
+
+        # verifie que user est connecte
+        celeb = Celebrity(
+            nom=nom,
+            prenom=prenom,
+            age=age,
+            profession=profession,
+            taille=taille,
+            Description=Description,
+        )
+        db.session.add(celeb)
+        db.session.commit()
+        return redirect(url_for("celebrites"))
+    return render_template("celeb_creation.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
