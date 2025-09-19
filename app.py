@@ -3,6 +3,7 @@ from markupsafe import escape
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime, timezone
+from flask_login import LoginManager
 import os
 
 NB_PROJETS = 3
@@ -65,6 +66,7 @@ def home():
 @app.route("/projets/")
 @app.route("/projets/<string:slug>")
 def projets(slug=""):
+    slug = escape(slug)
     if slug:
         projet = Projet.query.filter_by(slug=slug).first_or_404()
         return render_template("projet.html", projet=projet)
@@ -95,6 +97,7 @@ def add_projet():
 @app.route("/articles/")
 @app.route("/articles/<string:slug>")
 def articles(slug=""):
+    slug = escape(slug)
     if slug:
         article = Article.query.filter_by(slug=slug).first_or_404()
         return render_template("article.html", article=article)
@@ -157,17 +160,6 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        print(username, password)
         return redirect(url_for("home"))
     else:
         return render_template("login.html")
-
-
-@app.route("/jinja")
-def jinja():
-    return render_template(
-        "jinja.html",
-        name="louis",
-        show=True,
-        users=["patate", "momo", "mina", "dilcu", "ochako"],
-    )
