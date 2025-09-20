@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>le titre tout en haut dans l'onglet!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- <link rel="script" href="{{ url_for('static', filename='javascript/style.js') }}"> -->
 </head>
+
+<script src="static/js/style.js"></script>
 
 <body>
     <header>
@@ -19,11 +22,18 @@
                     <a href="{{ url_for('articles') }}">Articles</a>
                     <a href="{{ url_for('celebrites') }}">celebrites</a>
                     <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register') }}">Register</a>
                 </div>
             </div>
         </nav>
     </header>
     <hr>
+    {% if current_user.is_authenticated %}
+    <section class="user_name">
+        <h1>Welcome, {{ current_user.email }}!</h1>
+    </section>
+    <hr>
+    {% endif %}
     <main>
         {% block main %}{% endblock %}
     </main>

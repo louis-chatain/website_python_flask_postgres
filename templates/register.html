@@ -6,9 +6,9 @@
 </section>
 {% else %}
 <div class="need_padding">
-    <form class="form" method="post" action="{{ url_for('login') }}">
+    <form class="form" method="post" action="{{ url_for('register') }}">
         <div class="form_div">
-            <h1>Login</h1>
+            <h1>Register</h1>
             <input id="email" type="text" name="email" placeholder="email:ex name@gmail.com" value="@gmail.com"
                 required>
             <div class="password-container">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="projets_and_articles_header">
-            <button type="submit">Login!</button>
+            <button type="submit">Register!</button>
         </div>
     </form>
 </div>
