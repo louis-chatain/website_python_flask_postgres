@@ -11,7 +11,10 @@ NB_ARTICLES = 3
 IMG_UPLOAD = "static/images/"
 
 app = Flask(__name__)
+# app.secret_key = ""
 
+# login_manager = LoginManager()
+# login_manager.init_app(app)
 # ---------------------- DATABASE -------------------------
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db_51.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -37,12 +40,12 @@ class Projet(db.Model):
 
 class Celebrity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nom = db.Column(db.String(100))
-    prenom = db.Column(db.String(100))
-    age = db.Column(db.String(3))
-    profession = db.Column(db.String(150))
-    taille = db.Column(db.String(10))
-    Description = db.Column(db.String(150))
+    nom = db.Column(db.String(100), nullable=False) #would add nullable=False but sqlite does not support key SQL word "ALTER"
+    prenom = db.Column(db.String(100), nullable=False)
+    age = db.Column(db.SmallInteger) # would use unsigned TINYINT but sqlite does support either
+    profession = db.Column(db.String(500))
+    taille = db.Column(db.Numeric(5, 2), nullable=False) 
+    Description = db.Column(db.String(550), nullable=False)
 
 
 # ------------------------ END DATABASE --------------------------

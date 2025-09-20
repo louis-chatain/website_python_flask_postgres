@@ -1,6 +1,6 @@
-# !/bin/bash
 export FLASK_APP=app
-flask db migrate -m "Ajout de la table Celebrity"
-echo "------attente--------"
+echo "------going to migrate--------"
+flask db migrate -m "modiciation of the Celebrity Class"
+echo "------going to upgrade--------"
 flask db upgrade
 echo "Database migration complete."
