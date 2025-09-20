@@ -1,9 +1,17 @@
 from flask import Flask, redirect, render_template, request, url_for
 from markupsafe import escape
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from datetime import datetime, timezone
-from flask_login import LoginManager
+from flask_login import (
+    LoginManager,
+    UserMixin,
+    login_user,
+    logout_user,
+    current_user,
+    login_required,
+)
 import os
 
 NB_PROJETS = 3
@@ -11,10 +19,12 @@ NB_ARTICLES = 3
 IMG_UPLOAD = "static/images/"
 
 app = Flask(__name__)
-# app.secret_key = ""
+app.secret_key = (
+    "whatinthehellamisupposedtowritehere?generateaultrastrongpassword...maybe"
+)
 
-# login_manager = LoginManager()
-# login_manager.init_app(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 # ---------------------- DATABASE -------------------------
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db_51.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -40,15 +50,28 @@ class Projet(db.Model):
 
 class Celebrity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nom = db.Column(db.String(100), nullable=False) #would add nullable=False but sqlite does not support key SQL word "ALTER"
+    nom = db.Column(db.String(100), nullable=False)
     prenom = db.Column(db.String(100), nullable=False)
-    age = db.Column(db.SmallInteger) # would use unsigned TINYINT but sqlite does support either
+    age = db.Column(
+        db.SmallInteger
+    )  # would use unsigned TINYINT but sqlite does support either
     profession = db.Column(db.String(500))
-    taille = db.Column(db.Numeric(5, 2), nullable=False) 
+    taille = db.Column(db.Numeric(5, 2), nullable=False)
     Description = db.Column(db.String(550), nullable=False)
 
 
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(300), nullable=False)
+
+
 # ------------------------ END DATABASE --------------------------
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 @app.errorhandler(404)
@@ -62,7 +85,7 @@ def home():
     return render_template(
         "index.html",
         liste_projets=Projet.query.all()[:NB_PROJETS],
-        liste_articles=Article.query.all()[:NB_ARTICLES]
+        liste_articles=Article.query.all()[:NB_ARTICLES],
     )
 
 
@@ -77,6 +100,7 @@ def projets(slug=""):
     return render_template("projets.html", liste_projets=projets)
 
 
+@login_required
 @app.route("/projets/creer", methods=["GET", "POST"])
 def add_projet():
     if request.method == "POST":
@@ -108,6 +132,7 @@ def articles(slug=""):
     return render_template("articles.html", liste_articles=articles)
 
 
+@login_required
 @app.route("/articles/creer", methods=["GET", "POST"])
 def creation_article():
     if request.method == "POST":
@@ -133,6 +158,7 @@ def celebrites(slug=""):
     return render_template("celebs.html", liste_celeb=liste_celeb)
 
 
+@login_required
 @app.route("/celebrites/creer", methods=["GET", "POST"])
 def add_celeb():
     if request.method == "POST":
@@ -161,8 +187,32 @@ def add_celeb():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form["username"]
+        email = request.form["email"]
         password = request.form["password"]
+
+        user = User.query.filter_by(email=email).first()
+
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            return redirect(url_for("home"))
+        return render_template("login.html", message="Your email or password is incorect.")
+    return render_template("login.html")
+
+
+@app.route("/register", methods=["POST", "GET"])
+def register():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        hashed_password = generate_password_hash(password, method="pbkdf2:sha1", salt_length=8)
+
+        new_user = User(
+            email=email,
+            password=hashed_password
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
         return redirect(url_for("home"))
-    else:
-        return render_template("login.html")
+    return render_template("register.html")

@@ -34,6 +34,18 @@ main {
     min-height: 71vh;
 }
 
+.user_name{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightblue;
+}
+
+.user_name h1{
+
+    margin: 0px;
+}
+
 body {
     margin: 0;
 }
@@ -139,7 +151,7 @@ section {
     }
 }
 
-@media screen and (min-width: 550px) and (max-width: 700px){
+@media screen and (min-width: 550px) and (max-width: 700px) {
     #projets .grid {
         display: grid;
         grid-template-columns: auto;
@@ -155,7 +167,7 @@ section {
     }
 }
 
-@media screen and (min-width: 700px) and (max-width: 1200px){
+@media screen and (min-width: 700px) and (max-width: 1200px) {
     #projets .grid {
         display: grid;
         grid-template-columns: 50% 50%;
@@ -173,12 +185,13 @@ section {
         margin-left: 10px;
         justify-content: space-between;
     }
-    #projets p{
+
+    #projets p {
         margin: 0px;
     }
 }
 
-@media screen and (min-width: 1200px){
+@media screen and (min-width: 1200px) {
     #projets .grid {
         display: grid;
         grid-template-columns: 33% 33% 33%;
@@ -196,7 +209,8 @@ section {
         margin-left: 10px;
         justify-content: space-between;
     }
-    #projets p{
+
+    #projets p {
         margin: 0px;
     }
 }
