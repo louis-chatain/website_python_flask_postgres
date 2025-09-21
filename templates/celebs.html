@@ -3,7 +3,13 @@
 <div style="padding: 0 20%;">
     <div class="projets_and_articles_header">
         <h1 class="big_h1">Celebritity!</h1>
+        {% if current_user.is_authenticated %}
         <a href="{{ url_for('add_celeb') }}"><button>Publier la celebrity!</button></a>
+        {% else %}
+        <button class="popup" onclick="Popup()">Upload my celebrtity!
+            <span class="popuptext" id="myPopup">Register or Login to upload a celebrity!</span>
+        </button>
+        {% endif %}
     </div>
     <ul>
         {% for celeb in liste_celeb %}

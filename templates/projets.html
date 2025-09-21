@@ -3,14 +3,20 @@
 <section id="projets">
     <div class="projets_and_articles_header">
         <h1 class="big_h1">Projets!</h1>
+        {% if current_user.is_authenticated %}
         <a href="{{ url_for('add_projet') }}"><button>Publier mon projet!</button></a>
+        {% else %}
+        <button class="popup" onclick="Popup()">Publier mon projet!
+            <span class="popuptext" id="myPopup">Register or Login to upload a project!</span>
+        </button>
+        {% endif %}
     </div>
     <div class="grid">
         {% for projets in liste_projets %}
         <article>
             <div><img src={{projets.img_url}} alt="photo de moi"></div>
             <div>
-                <h2><a href="{{ url_for('projets', slug=projets.slug) }}">{{ projets.titre }}</a><u></u></h2>
+                <h2><a href="{{ url_for('projets', slug=projets.slug) }}">{{ projets.titre }}</a></h2>
                 <p>{{ projets.contenu }}</p>
             </div>
         </article>
