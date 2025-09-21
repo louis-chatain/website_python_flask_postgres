@@ -3,10 +3,13 @@
 {% if current_user.is_authenticated %}
 <section class="user_name">
     <h1>you are already logged in!</h1>
+    <form action="{{ url_for('logout') }}" method="post">
+        <button type="submit">Logout!</button>
+    </form>
 </section>
 {% else %}
 <div class="need_padding">
-    <form class="form" method="post" action="{{ url_for('login') }}">
+    <form class="form" action="{{ url_for('login') }}" method="post">
         <div class="form_div">
             <h1>Login</h1>
             <input id="email" type="text" name="email" placeholder="email:ex name@gmail.com" value="@gmail.com"

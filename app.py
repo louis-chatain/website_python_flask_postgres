@@ -1,17 +1,10 @@
 from flask import Flask, redirect, render_template, request, url_for
-from markupsafe import escape
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from werkzeug.security import generate_password_hash, check_password_hash
+from markupsafe import escape
 from datetime import datetime, timezone
-from flask_login import (
-    LoginManager,
-    UserMixin,
-    login_user,
-    logout_user,
-    current_user,
-    login_required,
-)
 import os
 
 NB_PROJETS = 3
@@ -19,13 +12,15 @@ NB_ARTICLES = 3
 IMG_UPLOAD = "static/images/"
 
 app = Flask(__name__)
-app.secret_key = (
-    "whatinthehellamisupposedtowritehere?generateaultrastrongpassword...maybe"
-)
+app.secret_key = ("whatinthehellamisupposedtowritehere?generateaultrastrongpassword")
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
 # ---------------------- DATABASE -------------------------
+
+
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db_51.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
@@ -52,9 +47,7 @@ class Celebrity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(100), nullable=False)
     prenom = db.Column(db.String(100), nullable=False)
-    age = db.Column(
-        db.SmallInteger
-    )  # would use unsigned TINYINT but sqlite does support either
+    age = db.Column(db.SmallInteger)  # would use unsigned TINYINT but sqlite does support either
     profession = db.Column(db.String(500))
     taille = db.Column(db.Numeric(5, 2), nullable=False)
     Description = db.Column(db.String(550), nullable=False)
@@ -76,7 +69,6 @@ def load_user(user_id):
 
 @app.errorhandler(404)
 def page_404(error):
-    # print(error)
     return render_template("page_404.html"), 404
 
 
@@ -100,8 +92,8 @@ def projets(slug=""):
     return render_template("projets.html", liste_projets=projets)
 
 
-@login_required
 @app.route("/projets/creer", methods=["GET", "POST"])
+@login_required
 def add_projet():
     if request.method == "POST":
         titre = request.form["titre"]
@@ -132,8 +124,8 @@ def articles(slug=""):
     return render_template("articles.html", liste_articles=articles)
 
 
-@login_required
 @app.route("/articles/creer", methods=["GET", "POST"])
+@login_required
 def creation_article():
     if request.method == "POST":
         titre = request.form["titre"]
@@ -158,8 +150,8 @@ def celebrites(slug=""):
     return render_template("celebs.html", liste_celeb=liste_celeb)
 
 
-@login_required
 @app.route("/celebrites/creer", methods=["GET", "POST"])
+@login_required
 def add_celeb():
     if request.method == "POST":
         nom = request.form["nom"]
@@ -198,6 +190,12 @@ def login():
         return render_template("login.html", message="Your email or password is incorect.")
     return render_template("login.html")
 
+@app.route("/logout", methods=["GET", "POST"])
+def logout():
+    if request.method == "POST":
+        logout_user()
+        return redirect(url_for("home"))
+
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
@@ -207,12 +205,10 @@ def register():
 
         hashed_password = generate_password_hash(password, method="pbkdf2:sha1", salt_length=8)
 
-        new_user = User(
-            email=email,
-            password=hashed_password
-        )
+        new_user = User(email=email, password=hashed_password)
 
         db.session.add(new_user)
         db.session.commit()
+        login_user(new_user)
         return redirect(url_for("home"))
     return render_template("register.html")
