@@ -1,0 +1,15 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<section id="projets">
+    <div class="grid">
+        <article>
+            <div><img src={{projet.img_url}} alt="photo de moi"></div>
+            <div>
+                <h2><u>{{ projet.titre }}</u></h2>
+                <p>{{ projet.contenu }}</p>
+            </div>
+        </article>
+        <!-- <article class="direction-rtl"> -->
+    </div>
+</section>
+{% endblock %}

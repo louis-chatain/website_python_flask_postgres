@@ -1,0 +1,14 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<div style="padding: 0 20%;">
+    <article>
+        <h2><u>{{ celeb.prenom }} {{ celeb.nom }}</u></h2>
+        <div>
+            <p>{{ celeb.age }}</p>
+            <p>{{ celeb.profession }}</p>
+            <p>{{ celeb.taille }}</p>
+            <p>{{ celeb.Description }}</p>
+        </div>
+    </article>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<div class="need_padding">
+    <form class="form" method="post" action="{{ url_for('add_projet') }}" enctype="multipart/form-data">
+        <div class="form_div">
+            <h1>creation de projets</h1>
+            <input id="titre" type="text" name="titre" placeholder="titre: ex. xenoblade" required>
+            <input id="slug" type="text" name="slug" placeholder="slug: ex. le-slug" required>
+            <textarea name="contenu" id="contenu" placeholder="contenue: ex. il etait une fois..." required></textarea>
+            <input type="file" name="image">
+        </div>
+        <div class="projets_and_articles_header">
+            <button type="submit">Upload mon projet!</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
