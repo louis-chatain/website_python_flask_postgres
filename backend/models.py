@@ -22,7 +22,7 @@ class Celebrity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(100), nullable=False)
     prenom = db.Column(db.String(100), nullable=False)
-    age = db.Column(db.SmallInteger)  # would use unsigned TINYINT but sqlite does support either
+    age = db.Column(db.SmallInteger)  # would use unsigned TINYINT but sqlite does not support either (0 - 256)
     profession = db.Column(db.String(500))
     taille = db.Column(db.Numeric(5, 2), nullable=False)
     Description = db.Column(db.String(550), nullable=False)

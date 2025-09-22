@@ -2,9 +2,13 @@ from flask import redirect, render_template, request, url_for
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from markupsafe import escape
-from config import login_manager, app, db, NB_ARTICLES, NB_PROJETS, IMG_UPLOAD
+from config import login_manager, app, db
 from models import User, Projet, Article, Celebrity
 import os
+
+
+NB_PROJETS = 3
+NB_ARTICLES = 3
 
 
 @login_manager.user_loader
@@ -48,12 +52,14 @@ def add_projet():
 
         image_name = "DOROHEDORO.png"
         if image.filename != "":
-            image_name = image.filename 
+            image_name = image.filename
             backend_path = os.path.dirname(os.path.abspath(__file__))
-            images_folder_path = os.path.join(backend_path, '../frontend/static/images', image_name)
+            images_folder_path = os.path.join(
+                backend_path, "../frontend/static/images", image_name
+            )
             image.save(images_folder_path)
 
-        img_url = f"../static/images/{image_name}" #only this is send to the database
+        img_url = f"../static/images/{image_name}"  # only this is send to the database
         # verifie que user est connecte
         projet = Projet(titre=titre, slug=slug, img_url=img_url, contenu=contenu)
         db.session.add(projet)
