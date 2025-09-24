@@ -26,8 +26,8 @@ class Celebrity(db.Model):
     profession = db.Column(db.String(500))
     taille = db.Column(db.Numeric(5, 2), nullable=False)
     Description = db.Column(db.String(550), nullable=False)
-    # User_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # user = db.relationship('User', backref='celebrities')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('celebrities', lazy=True))
 
 
 class User(db.Model, UserMixin):
