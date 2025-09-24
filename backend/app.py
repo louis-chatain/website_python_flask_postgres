@@ -173,6 +173,15 @@ def register():
         return redirect(url_for("home"))
     return render_template("register.html")
 
+@app.route("/unregister", methods=["POST", "GET"])
+@login_required
+def unregister():
+    if request.method == "POST":
+        db.session.delete(current_user)
+        db.session.commit()
+        logout_user()
+        return redirect(url_for("home"))
+
 
 if __name__ == "__main__":
     with app.app_context():

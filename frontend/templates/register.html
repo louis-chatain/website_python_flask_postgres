@@ -2,7 +2,10 @@
 {% block main %}
 {% if current_user.is_authenticated %}
 <section class="user_name">
-    <h1>you are already logged in!</h1>
+    <h1>you are already registered in!</h1>
+    <form action="{{ url_for('unregister') }}" method="post">
+        <button type="submit">i want to unregister!</button>
+    </form>
 </section>
 {% else %}
 <div class="need_padding">
