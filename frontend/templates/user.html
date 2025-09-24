@@ -1,0 +1,27 @@
+{% extends "footer_header.html" %}
+{% block main %}
+<section id="projets">
+    <div>
+        <section>
+            <div>
+                <h2><u>{{ user.email }}</u></h2>
+                {% if user.celebrities %}
+                <ul>
+                    {% for celebrity in user.celebrities %}
+                    <li>
+                        <h2>{{ celebrity.prenom }} {{ celebrity.nom }}</h2>
+                        <p><strong>Age:</strong> {{ celebrity.age }}</p>
+                        <p><strong>Profession:</strong> {{ celebrity.profession }}</p>
+                        <p><strong>Height:</strong> {{ celebrity.taille }} meters</p>
+                        <p><strong>Description:</strong> {{ celebrity.Description }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>You have not uploaded any celebrities yet.</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+</section>
+{% endblock %}
