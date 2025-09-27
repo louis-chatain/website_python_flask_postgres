@@ -16,6 +16,11 @@
                 <button><a href="">Contactez Moi</a></button>
                 <div>
                     <a href="{{ url_for('home') }}">Home</a>
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('user') }}">Profil</a>
+                    {% else %}
+                    <a href="{{ url_for('login') }}">Profil</a>
+                    {% endif %}
                     <a href="{{ url_for('projets') }}">projets</a>
                     <a href="{{ url_for('articles') }}">Articles</a>
                     <a href="{{ url_for('celebrites') }}">celebrites</a>

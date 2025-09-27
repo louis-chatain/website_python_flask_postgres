@@ -292,6 +292,12 @@ footer p {
     border: 1px solid black;
 }
 
+.celeb {
+    display: flex;
+    justify-content: space-between;
+    font-size: xx-large;
+}
+
 .popup {
     position: relative;
     display: inline-block;

@@ -98,6 +98,7 @@ def creation_article():
 @app.route("/celebrites/<string:slug>")
 def celebrites(slug=""):
     slug = escape(slug)
+    
     if slug:
         celeb = Celebrity.query.filter_by(nom=slug).first_or_404()
         return render_template("celeb.html", celeb=celeb)
@@ -115,6 +116,7 @@ def add_celeb():
         profession = request.form["profession"]
         taille = request.form["taille"]
         Description = request.form["Description"]
+        user_id = current_user.id
 
         # verifie que user est connecte
         celeb = Celebrity(
@@ -124,11 +126,19 @@ def add_celeb():
             profession=profession,
             taille=taille,
             Description=Description,
+            user_id = user_id
         )
         db.session.add(celeb)
         db.session.commit()
         return redirect(url_for("celebrites"))
     return render_template("celeb_creation.html")
+
+@app.route("/user")
+@login_required
+def user():
+    user = User.query.filter_by(email=current_user.email).first_or_404()
+    return render_template("user.html", user=user)
+
 
 
 @app.route("/login", methods=["GET", "POST"])

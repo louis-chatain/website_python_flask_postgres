@@ -14,9 +14,14 @@
     <ul>
         {% for celeb in liste_celeb %}
         <li>
-            <a href="{{ url_for('celebrites', slug=celeb.nom) }}">
-                {{ celeb.prenom }} {{ celeb.nom }}
-            </a>
+            <div class="celeb">
+                <div>
+                    <a href="{{ url_for('celebrites', slug=celeb.nom) }}">
+                        {{ celeb.prenom }} {{ celeb.nom }}
+                    </a>
+                </div>
+                <div>uploaded by: {{celeb.user.email}}</div>
+            </div>
         </li>
         {% endfor %}
     </ul>
